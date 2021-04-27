@@ -17,6 +17,8 @@ n_fft = len(fft_signal)
 xf = np.linspace(0.0, sr / 2.0, n_fft // 2)
 fft_y = 2.0 / n_fft * np.abs(fft_signal[0:n_fft // 2])
 plt.plot(fft_y)
+plt.ylabel('Amplitude')
+plt.xlabel('Frequency [Hz]')
 plt.show()
 
 #############
