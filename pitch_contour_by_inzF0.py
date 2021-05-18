@@ -4,19 +4,53 @@ import matplotlib.pyplot as plt
 import librosa.display
 from tkinter import filedialog
 from scipy.fftpack import fft
+import wave
+
+print('start')
 
 y, sr = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))), sr=16000)
 
+"""
+adres = "C:\\Users\\konie\\OneDrive\\Pulpit\\nagrania\\do programu\\piano\\69.wav"
+wf = wave.open(adres, 'rb')
+signal = wf.readframes(-1)
+signal = np.fromstring(signal, 'Int16')
+print('wf n ', len(signal), 'y len', len(y))
 a = 3
 print(a)
+"""
+
+x = np.linspace(0, len(y)/sr, num=len(y))
+print('x len to', len(x))
+print('x to ', x)
+print('sr to ', sr)
+
+
+
+plt.plot(x,y)
+plt.title('123332123')
+plt.show()
+
+print('ilość próbek pliku to ', len(y))
+
 
 ######### samo fft
 fft_signal = fft(y)
 n_fft = len(fft_signal)
 
+
+
 xf = np.linspace(0.0, sr / 2.0, n_fft // 2)
 fft_y = 2.0 / n_fft * np.abs(fft_signal[0:n_fft // 2])
-plt.plot(fft_y)
+
+line = []
+for i in fft_y:
+    line.append(0.01)
+# print('line to ', line)
+
+plt.plot(fft_y,label = "line 1")
+plt.plot(line,label = "line 2")
+plt.xlim(0,4000)
 plt.ylabel('Amplitude')
 plt.xlabel('Frequency [Hz]')
 plt.show()
@@ -41,7 +75,7 @@ def get_fft(fft_y):
             prazki.append((p + k) * fs / rozmiar_okna)
         return prazki
 
-    prazki = prazki_widma(fft_y, 0.02, 2048, 1024)
+    prazki = prazki_widma(fft_y, 0.01, 2048, 1024)
     numer_prazka = 1
     for p in prazki:
         numer_prazka = numer_prazka + 1
@@ -70,6 +104,9 @@ def get_fft(fft_y):
             licznik += 1
 
     voice_fft = round(odleglosci[0], 3)
+    print('odleglosci to ', odleglosci)
+
+
     print('Częstotliwość zaśpiewanego dźwięku to: {} Hz'.format(voice_fft))
 
     return voice_fft

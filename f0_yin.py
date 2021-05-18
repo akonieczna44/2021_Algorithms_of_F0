@@ -5,7 +5,7 @@ import numpy as np
 
 # funkcja pana z gita, ale trzeba ogarnąć, bo nie pasuje mu 24-bita wave
 
-fs, data = wavfile.read("E1_bass.wav")
+fs, data = wavfile.read("56_Ang_12bit.wav")
 
 print(fs)
 
