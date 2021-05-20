@@ -8,16 +8,24 @@ import wave
 
 print('start')
 
-y, sr = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))), sr=16000)
-
+y, sr = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
 """
+
 adres = "C:\\Users\\konie\\OneDrive\\Pulpit\\nagrania\\do programu\\piano\\69.wav"
 wf = wave.open(adres, 'rb')
 signal = wf.readframes(-1)
 signal = np.fromstring(signal, 'Int16')
-print('wf n ', len(signal), 'y len', len(y))
+#print('wf n ', len(signal), 'y len', len(y))
 a = 3
-print(a)
+print('n frames', wf.getnframes())
+
+print('sr - sampling rate.. ', wf.getframerate())
+sr = wf.getframerate()
+
+
+print('len signal',len(signal))
+########### ========================================
+#y = signal
 """
 
 x = np.linspace(0, len(y)/sr, num=len(y))
@@ -39,20 +47,32 @@ fft_signal = fft(y)
 n_fft = len(fft_signal)
 
 
-
 xf = np.linspace(0.0, sr / 2.0, n_fft // 2)
 fft_y = 2.0 / n_fft * np.abs(fft_signal[0:n_fft // 2])
 
+# pomocnicza linia granicy amplitudy
 line = []
 for i in fft_y:
     line.append(0.01)
 # print('line to ', line)
 
-plt.plot(fft_y,label = "line 1")
-plt.plot(line,label = "line 2")
-plt.xlim(0,4000)
+plt.subplot(2,1,1)
+plt.plot(xf, fft_y)
+plt.plot(line)
+plt.title('pierwsze DOBRE fft')
+#plt.xlim(0,4000)
 plt.ylabel('Amplitude')
 plt.xlabel('Frequency [Hz]')
+#plt.show()
+
+
+plt.subplot(2,1,2)
+plt.plot(xf, fft_signal,label = "line 1")
+plt.plot(line,label = "line 2")
+#plt.xlim(0,4000)
+plt.ylabel('Amplitude')
+plt.xlabel('Frequency [Hz]')
+plt.title('słabe fft')
 plt.show()
 
 #############
@@ -68,11 +88,13 @@ def get_fft(fft_y):
         poczatki = np.where(pochodna == 1)[0] + 1
         konce = np.where(pochodna == -1)[0] + 1
         prazki = []
+        
         for poczatek, koniec in zip(poczatki, konce):
             p = np.argmax(widmo[poczatek:koniec]) + poczatek
             a, b, c = widmo[p - 1:p + 2]
             k = 0.5 * (a - c) / (a - 2 * b + c)
             prazki.append((p + k) * fs / rozmiar_okna)
+            print('prazki to ', prazki)
         return prazki
 
     prazki = prazki_widma(fft_y, 0.01, 2048, 1024)
@@ -113,3 +135,16 @@ def get_fft(fft_y):
 
 fffttt = get_fft(fft_y)
 print(fffttt)
+"""
+S = np.abs(librosa.stft(y))
+S_left = librosa.stft(y, center=False)
+D_short = librosa.stft(y, hop_length=64)
+
+fig, ax = plt.subplots()
+
+img = librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max),y_axis='log', x_axis='time', ax=ax)
+
+ax.set_title('Power spectrogram')
+
+fig.colorbar(img)
+"""

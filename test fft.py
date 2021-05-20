@@ -23,7 +23,14 @@ print(len(y))
 
 # y fft
 X = np.fft.fft(y)
+
+print(type(N))
+print(type(dt))
+
+
 df = 1/(N*dt)
+
+print('df to ', df)
 
 xxx = 0
 y_fft = []
@@ -35,10 +42,14 @@ plt.plot(y)
 plt.show()
 #plt.plot(X)
 
+
+
+
+"""
 z = np.corrcoef(y)
 #print(len(z))
 print(z)
-
+"""
 
 
 
