@@ -9,8 +9,9 @@ import wave
 print('start')
 
 y, sr = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
-"""
 
+
+"""
 adres = "C:\\Users\\konie\\OneDrive\\Pulpit\\nagrania\\do programu\\piano\\69.wav"
 wf = wave.open(adres, 'rb')
 signal = wf.readframes(-1)
@@ -32,13 +33,6 @@ x = np.linspace(0, len(y)/sr, num=len(y))
 print('x len to', len(x))
 print('x to ', x)
 print('sr to ', sr)
-
-
-
-plt.plot(x,y)
-plt.title('123332123')
-plt.show()
-
 print('ilość próbek pliku to ', len(y))
 
 
@@ -52,7 +46,7 @@ fft_y = 2.0 / n_fft * np.abs(fft_signal[0:n_fft // 2])
 
 # pomocnicza linia granicy amplitudy
 line = []
-for i in fft_y:
+for i in range(len(xf)):
     line.append(0.01)
 # print('line to ', line)
 
@@ -60,20 +54,17 @@ plt.subplot(2,1,1)
 plt.plot(xf, fft_y)
 plt.plot(line)
 plt.title('pierwsze DOBRE fft')
-#plt.xlim(0,4000)
+plt.xlim(0,2000)
 plt.ylabel('Amplitude')
 plt.xlabel('Frequency [Hz]')
 #plt.show()
 
 
 plt.subplot(2,1,2)
-plt.plot(xf, fft_signal,label = "line 1")
-plt.plot(line,label = "line 2")
-#plt.xlim(0,4000)
-plt.ylabel('Amplitude')
-plt.xlabel('Frequency [Hz]')
-plt.title('słabe fft')
+plt.plot(x,y)
+plt.title('audio')
 plt.show()
+
 
 #############
 
@@ -94,13 +85,15 @@ def get_fft(fft_y):
             a, b, c = widmo[p - 1:p + 2]
             k = 0.5 * (a - c) / (a - 2 * b + c)
             prazki.append((p + k) * fs / rozmiar_okna)
-            print('prazki to ', prazki)
+
         return prazki
 
     prazki = prazki_widma(fft_y, 0.01, 2048, 1024)
     numer_prazka = 1
     for p in prazki:
+        print('prążek{} = {}, współczynnik = {}'.format(numer_prazka, round(p,3), round(p / prazki[0],1)))
         numer_prazka = numer_prazka + 1
+
 
     harmoniczne = []
     harmoniczne.append(prazki[0])
