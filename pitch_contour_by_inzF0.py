@@ -109,9 +109,6 @@ def prazki_widma (widmo, prog, rozmiar_okna, fs):
 # ---------------------------------------------------------- 3. uśrednianie prążków
     for poczatek, koniec in zip(poczatki, konce):
         p = np.argmax(widmo[poczatek:koniec]) + poczatek
-        argmax = np.argmax(widmo[poczatek:koniec])
-        print('arg max to ',argmax)
-        print('poczatek to ', poczatek)
         a, b, c = widmo[p - 1:p + 2]
         k = 0.5 * (a - c) / (a - 2 * b + c)
         prazki.append((p + k) * fs / rozmiar_okna*2) # dodane *2
@@ -139,18 +136,16 @@ for p in prazki[1:]:
 
 licznik = 0
 odleglosci = []
-for har in range(len(harmoniczne) - 1):
 
+for har in range(len(harmoniczne) - 1):
     if licznik == len(harmoniczne):
         break
 
     elif licznik < len(harmoniczne):
-        #o = round(harmoniczne[licznik + 1] - harmoniczne[licznik],2)
         odleglosci.append(round(harmoniczne[licznik + 1] - harmoniczne[licznik],2))
         licznik += 1
+
 # ---------------------------------------------------------- 3. przypisanie f0
 voice_fft = round(odleglosci[0], 3)
-print('odleglosci to ', odleglosci)
-
-
-print('Częstotliwość zaśpiewanego dźwięku to: {} Hz'.format(voice_fft))
+print('\nOdleglosci to ', odleglosci)
+print('\nCzęstotliwość zaśpiewanego dźwięku to: {} Hz\n'.format(voice_fft))
