@@ -50,7 +50,7 @@ def freq_from_autocorr(sig, fs):
 
     return fs / px
 
-def f0_autocorellation():
+def f0__autocorellation():
 
     y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
 
