@@ -7,12 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import librosa.display
 from tkinter import filedialog
-from scipy.fftpack import fft
-from scipy.signal import blackmanharris, correlate
+from scipy.signal import correlate
 from time import time
-
-print('start')
-
 
 def parabolic(f, x):
     """Quadratic interpolation for estimating the true position of an
@@ -54,16 +50,19 @@ def freq_from_autocorr(sig, fs):
 
     return fs / px
 
+def f0_autocorellation():
 
-y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
+    y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
 
 
-print('Peak ', end=' ')
-start_time = time()
-print('Autokorelacja F0 = %f Hz' % round(freq_from_autocorr(y, fs),4))
-print('Time elapsed: %.3f s\n' % (time() - start_time))
+    print('Peak ', end=' ')
+    start_time = time()
+    print('Autokorelacja F0 = %f Hz' % round(freq_from_autocorr(y, fs),4))
+    print('Time elapsed: %.3f s\n' % (time() - start_time))
 
-# to do - autok.
-plt.plot(y)
-plt.show()
+    # to do - autok.
+    plt.plot(y)
+    plt.show()
+
+#f0_autocorellation()
 
