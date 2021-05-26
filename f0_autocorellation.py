@@ -1,7 +1,3 @@
-# autokorelacja
-# wychodzi w miarę w porządku, ale trzeba to przepisać ładnie i dopisać tutaj
-# przy vib1 wychodzi wszędzie inaczej lub tylko autokorelacja dobrze
-
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,6 +5,11 @@ import librosa.display
 from tkinter import filedialog
 from scipy.signal import correlate
 from time import time
+
+# autokorelacja
+# wychodzi w miarę w porządku, ale trzeba to przepisać ładnie i dopisać tutaj
+# przy vib1 wychodzi wszędzie inaczej lub tylko autokorelacja dobrze
+
 
 def parabolic(f, x):
     """Quadratic interpolation for estimating the true position of an

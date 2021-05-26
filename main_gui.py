@@ -1,9 +1,11 @@
-# piękne ułatwienie za pomocą gui
-
 from tkinter import *
-from pitch_contour_by_inzF0 import *
+from F0_by_inz import *
 from f0_spectrogram import *
 from f0_autocorellation import *
+from f0_zero_cross import *
+
+# piękne ułatwienie za pomocą gui
+
 
 # ------------------------------------------------------------------    OKNO WYBORU  
 window = Tk()
@@ -16,7 +18,7 @@ fgcolor = '#b3cde0'
 
 top = Toplevel()
 window.title("main")
-window.geometry("700x660")
+window.geometry("400x500")
 window.configure(bg=tpcolor)
 
 
@@ -44,7 +46,7 @@ label_title.pack()
 
 # ------------------------------------------------------------------   amplituda
 
-btn1 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Analiza przejśc przez 0 ',command=fun1)
+btn1 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Analiza przejśc przez 0 ',command=f0__zero_cross)
 btn1.grid(row=1, column=0, padx=25, pady=20)
 
 btn2 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Autokorelacja ',command=f0__autocorellation)

@@ -32,7 +32,7 @@ def f0__welch():
     plt.xlabel('frequency [Hz]')
 
     plt.ylabel('PSD')
-    plt.title('welch')
+    plt.title('Power Welch')
     plt.grid()
 
     plt.show()
