@@ -27,8 +27,8 @@ def f0__pitch_contour_by_inz():
 
     # ---------------------------------------------------------- filtrowanie fft i pomocnicza linia granicy amplitudy
 
-    prog_amp = 0.01 # zmienna wartość w zależności od rodzaju nagrania i wartości amplitudy
-    prog_min = 0.005 # poniżej tej wartości w widmie zeruję
+    prog_amp = 0.0071 # zmienna wartość w zależności od rodzaju nagrania i wartości amplitudy
+    prog_min = 0.003 # poniżej tej wartości w widmie zeruję
 
     line = []
     for i in range(len(fft_x)):
@@ -152,4 +152,6 @@ def f0__pitch_contour_by_inz():
     print('\nCzęstotliwość zaśpiewanego dźwięku to: {} Hz\n'.format(voice_fft))
 
 print('koniec')
-#f0__pitch_contour_by_inz()
+
+
+f0__pitch_contour_by_inz()

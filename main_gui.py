@@ -3,6 +3,7 @@ from F0_by_inz import *
 from f0_spectrogram import *
 from f0_autocorellation import *
 from f0_zero_cross import *
+from f0_welch_psd import *
 
 # piękne ułatwienie za pomocą gui
 
@@ -42,8 +43,6 @@ def fun1():
 label_title = Label(frame_title,bg=tpcolor, fg=fgcolor, font = ("Times New Roman",14), pady = 10,  text = '\n[tytuł]', justify = CENTER)
 label_title.pack()
 
-
-
 # ------------------------------------------------------------------   amplituda
 
 btn1 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Analiza przejśc przez 0 ',command=f0__zero_cross)
@@ -62,7 +61,7 @@ btn3.grid(row=2, column=0, padx=25, pady=20)
 btn4 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Spectrogram ',command= f0__spectrogram)
 btn4.grid(row=3, column=0, padx=25, pady=20)
 
-
+# ------------------------------------------------------------------   FFT power
 
 btn5 = Button(frame1, bg=tpcolor, fg=fgcolor, font = ("Times New Roman",10), pady = 10,  text=' Spectrogram welch ',command=f0__welch)
 btn5.grid(row=3, column=1, padx=25, pady=20)

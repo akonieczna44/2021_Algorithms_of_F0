@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from tkinter import filedialog
 from scipy.fftpack import fft
 
+# rozmiar font
+sizee = 13
 
 y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
 x = np.linspace(0,  len(y)/fs, len(y))
@@ -12,10 +14,12 @@ x = np.linspace(0,  len(y)/fs, len(y))
 
 plt.plot(x, y)
 #plt.plot(line)
-plt.title('Przebieg czasowy dźwięku')
+plt.title('Przebieg czasowy dźwięku pianina', size = sizee)
 plt.grid()
-plt.ylabel('Amplituda')
-plt.xlabel('Czas [s]')
+plt.ylabel('Amplituda', size = sizee)
+plt.xlabel('Czas [s]', size = sizee)
+plt.xticks(size = sizee)
+plt.yticks(size = sizee)
 plt.show()
 
 
@@ -44,13 +48,17 @@ for i in range(len(fft_y)):
     else:
         fft_y_filtr.append(fft_y[i])
 
-#plt.subplot(2,1,1)
+
 plt.plot(fft_x, fft_y)
-plt.plot(line)
-plt.title('FFT signal')
+#plt.plot(line)
+#plt.title('Widmo dźwięku pianina ze składową F0 = 220 Hz',size = 15)
+plt.title('Widmo dźwięku woklanego ze składową F0 = 200 Hz',size = 15)
 plt.xlim(0,2000)
-plt.ylabel('Amplituda')
-plt.xlabel('Częstotliwość [Hz]')
+plt.xticks(size = sizee)
+plt.yticks(size = sizee)
+# plt.grid()
+plt.ylabel('Amplituda',size = sizee)
+plt.xlabel('Częstotliwość [Hz]',size = sizee)
 plt.show()
 
 

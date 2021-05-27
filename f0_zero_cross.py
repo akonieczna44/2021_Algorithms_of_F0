@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tkinter import filedialog
 import librosa
+from numpy.core.function_base import linspace
 
 # analiza przejść przez zero
 # trochę moja, trochę nie
@@ -10,29 +11,43 @@ import librosa
 def f0__zero_cross():
 
     y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
-
+    print('fs to', fs)
+    x = linspace(0,len(y)/fs, len(y))
     # wybór fragmentu
-    start = 5000
-    stop = start + 5000
+    # 14000 i 18000 i 24000 do prezki
+    start = 14000
+    stop = start + 2205 # 10 ms
 
     # klasycznie pomocnicza linia
     line = []
     for i in range(len(y)):
         if stop > i > start:
-            line.append(0.1)
+            line.append(0.3)
         else:
             line.append(0)
     
     y_part = y[start:stop]
-    
+    sizee = 13
+
     plt.subplot(2,1,1)
-    plt.plot(y)
-    plt.plot(line)
-    plt.title('zobacz, które próbki')
+    plt.plot(x,y)
+    plt.plot(x,line)
+    plt.xlim(0,2.0)
+    plt.title('Przebieg czasowy dźwięku o F0 = 220 Hz', size = sizee)
+    plt.grid()
+    plt.ylabel('Amplituda', size = sizee)
+    #plt.xlabel('Czas [s]', size = sizee)
+    plt.xticks(size = sizee)
+    plt.yticks(size = sizee)
 
     plt.subplot(2,1,2)
-    plt.plot(y_part)
-    plt.title('badany fragment')
+    plt.plot(x[start:stop],y_part)
+    plt.title('Fragment przebiegu czasowego I o F0 = 219 Hz',size = sizee)
+    plt.xlabel('Czas [s]', size = sizee)
+    plt.xticks(size = sizee)
+    plt.yticks(size = sizee)
+    plt.xlim(x[start],x[stop])
+    plt.grid()
     plt.show()
 
     def zero_cross(y):
@@ -57,7 +72,7 @@ def f0__zero_cross():
     print('f0 z całego nagrania: ',f0_all, 'Hz')
     print('f0 z fragmentu nagrania: ',f0_part, 'Hz\n')
 
-# f0__zero_cross()
+f0__zero_cross()
 
 
 

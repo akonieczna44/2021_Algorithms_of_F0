@@ -7,6 +7,18 @@ from scipy.signal import correlate
 from time import time
 
 # autokorelacja
+# 1. liczę funkcję autokorelacji
+# 2. szukam pierwszego maksimum
+# 3. obliczam f0 przy pomocy...
+# -----------------------------------
+# 1/T = f0
+# liczba próbek = czas nagrania * fs
+# czas nagrania = liczba próbek / fs
+# ...
+# f0 = 1 / (liczba próbek/fs) = fs/ liczba próbek
+# np. dla f0 = 220.5 Hz maksymalny peak funkcji autokorelacji jest w miejscu 100.
+# czyli f0 = 22050/100 = 220.5 Hz
+# -----------------------------------
 # wychodzi w miarę w porządku, ale trzeba to przepisać ładnie i dopisać tutaj
 # przy vib1 wychodzi wszędzie inaczej lub tylko autokorelacja dobrze
 
@@ -41,14 +53,22 @@ def freq_from_autocorr(sig, fs):
     d = np.diff(corr)
     start = np.nonzero(d > 0)[0][0]
 
-    # Find the next peak after the low point (other than 0 lag).  This bit is
-    # not reliable for long signals, due to the desired peak occurring between
-    # samples, and other peaks appearing higher.
-    # Should use a weighting function to de-emphasize the peaks at longer lags.
+    x_corr = np.linspace(0, len(corr)/fs, len(corr))
+    sizee = 13
+    plt.plot(x_corr, corr)
+    plt.title('Funkcja autokorelacji', size = sizee)
+    plt.grid()
+    plt.ylabel('Amplituda', size = sizee)
+    plt.xlabel('Czas [s]', size = sizee)
+    plt.xticks(size = sizee)
+    plt.yticks(size = sizee)
+
+    plt.show()
+
+    # Find the next peak after the low point (other than 0 lag)
     peak = np.argmax(corr[start:]) + start
     print('peak is ',peak)
     px, py = parabolic(corr, peak)
-
     return fs / px
 
 def f0__autocorellation():
@@ -63,7 +83,8 @@ def f0__autocorellation():
 
     # to do - autok.
     plt.plot(y)
+    plt.title('Przebieg czasowy sygnału')
     plt.show()
 
-#f0_autocorellation()
+f0__autocorellation()
 
