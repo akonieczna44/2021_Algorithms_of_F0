@@ -13,12 +13,16 @@ def f0__spectrogram():
 
     f, t, Sxx = signal.spectrogram(y, sr)
 
-    plt.pcolormesh(t, f, Sxx) # shading='gouraud'
-
-    plt.ylabel('Frequency [Hz]')
+    plt.pcolormesh(t, f, Sxx,shading='gouraud')
+    sizee = 15
+    plt.ylabel('Częstotliwość [Hz]', size = sizee)
+    plt.title('Spektrogram dźwięku o F0 = 349 Hz', size = sizee)
     plt.ylim(0,1200)
     plt.xlim(0,len(y)/sr)
-    plt.xlabel('Time [sec]')
+    plt.xlabel('Czas [s]', size = sizee)
+    plt.xticks(size = sizee)
+    plt.yticks(size = sizee)
+
     plt.show()
 
 f0__spectrogram()

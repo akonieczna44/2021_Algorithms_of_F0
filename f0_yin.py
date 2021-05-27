@@ -2,13 +2,26 @@ import matplotlib.pyplot as plt
 from scipy.fftpack import fft
 from scipy.io import wavfile
 import numpy as np
+from tkinter import filedialog
+import librosa
 
 # funkcja pana z gita, ale trzeba ogarnąć, bo nie pasuje mu 24-bita wave
 
-fs, data = wavfile.read("56_Ang_12bit.wav")
+#fs, data = wavfile.read("56_Ang_12bit.wav")
 
+# to trzeba z jakiejś szalonej biblioteki pobrać, ale nic nie działa na razie
+y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
+print('fs to', fs)
 print(fs)
 
+
+
+# to trzeba z jakiejś szalonej biblioteki pobrać, ale nic nie działa na razie
+
+f0_yin = librosa.pyin(y)
+print('yinnnn ', f0_yin)
+
+"""
 fig = plt.figure()
 g1 = fig.add_subplot(221)
 g1.set_title("Original signal")
@@ -63,3 +76,5 @@ for i in range(tau_max):
     if d[i-1] > d[i] < d[i+1]:
         print(44100/i)
         break
+
+"""

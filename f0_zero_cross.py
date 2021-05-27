@@ -15,7 +15,7 @@ def f0__zero_cross():
     x = linspace(0,len(y)/fs, len(y))
     # wybór fragmentu
     # 14000 i 18000 i 24000 do prezki
-    start = 14000
+    start = 12000
     stop = start + 2205 # 10 ms
 
     # klasycznie pomocnicza linia
