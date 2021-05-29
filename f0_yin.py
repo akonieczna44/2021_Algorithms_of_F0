@@ -1,80 +1,28 @@
 import matplotlib.pyplot as plt
-from scipy.fftpack import fft
-from scipy.io import wavfile
 import numpy as np
 from tkinter import filedialog
 import librosa
+import librosa.display
+import librosa.core.pitch
 
-# funkcja pana z gita, ale trzeba ogarnąć, bo nie pasuje mu 24-bita wave
-
-#fs, data = wavfile.read("56_Ang_12bit.wav")
-
-# to trzeba z jakiejś szalonej biblioteki pobrać, ale nic nie działa na razie
+# yin działa po najnowszej aktualizacji librosy ;)))
 y, fs = librosa.load(filedialog.askopenfilename(title="Wybierz plik", filetypes = (("wav mono files",".wav"), ("all files", "*.*"))))
-print('fs to', fs)
-print(fs)
+print('fs ', fs)
 
+print(librosa.__version__)
 
+f0 = librosa.yin(y, fmin=librosa.note_to_hz('C2'), fmax=librosa.note_to_hz('C7'))
+times = librosa.times_like(f0)
 
-# to trzeba z jakiejś szalonej biblioteki pobrać, ale nic nie działa na razie
+print('yin fo: ',f0)
+print('przeszło\n')
 
-f0_yin = librosa.pyin(y)
-print('yinnnn ', f0_yin)
-
-"""
-fig = plt.figure()
-g1 = fig.add_subplot(221)
-g1.set_title("Original signal")
-g1.plot(data)
-
-
-g2 = fig.add_subplot(222)
-g2.set_title("FFT")
-s = fft(data)
-k = np.arange(len(data))
-T = len(data)/fs
-frqLabel = k/T
-
-g2.plot(frqLabel[:500], abs(s[:500]))
-g2.grid(b=True, which='both', color='0.65')
-
-
-
-# autocorrelation thing
-tau_max = 3000
-w_size = 6000
-r = np.zeros(tau_max)
-for i in range(tau_max):
-    s = 0.0
-    for j in range(w_size):
-        s += (data[j] - data[j+i]) * (data[j] - data[j+i])
-    r[i] = s
-
-g3 = fig.add_subplot(223)
-g3.set_title("Difference function")
-g3.plot(r)
-
-# d` calculation
-d = np.zeros(tau_max)
-s = r[0]
-d[0] = 1
-for i in range(1,tau_max):
-    s += r[i]
-    d[i] = r[i] / ((1 / i) * s) 
-
-g4 = fig.add_subplot(224)
-g4.set_title("Normalized diff func")
-g4.plot(d)
-
+D = librosa.amplitude_to_db(np.abs(librosa.stft(y)), ref=np.max)
+fig, ax = plt.subplots()
+img = librosa.display.specshow(D, x_axis='time', y_axis='log', ax=ax)
+ax.set(title='pYIN fundamental frequency estimation')
+fig.colorbar(img, ax=ax, format="%+2.f dB")
+ax.plot(times, f0, label='f0', color='cyan', linewidth=3)
+ax.legend(loc='upper right')
 plt.show()
-
-# find frequency. use 0.5 as threshold
-
-for i in range(tau_max):
-    if d[i] > 0.5:
-        continue
-    if d[i-1] > d[i] < d[i+1]:
-        print(44100/i)
-        break
-
-"""
+print('poszło')
